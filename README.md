@@ -1,6 +1,6 @@
-# Restaurant List
+# Restaurant List 2.0
 
-A demo project of restaurant list which built with Node.js and Express Framework.
+A RESTful WebApp of restaurant list with CRUD which built with Node.js and Express Framework .
 
 ## Getting Started
 
@@ -49,3 +49,4 @@ go to http://localhost:3000
 
 1. Keywords searching for restaurants.
 2. See more information for the restaurant.
+3. It is able to create,delete or edit the restaurant list.
