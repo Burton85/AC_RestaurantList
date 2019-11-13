@@ -21,7 +21,6 @@ db.once("open", () => {
   // }
   for (let i = 0; i < results.length; i++) {
     RestaurantDB.create({
-      id: results[i].id,
       name: results[i].name,
       name_en: results[i].name_en,
       category: results[i].category,

@@ -1,18 +1,18 @@
-// require packages from node
+// Require packages from node
 const express = require("express");
 const app = express();
 const port = 3000;
 const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
-//setting handlebars
+//Setting handlebars
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
-//use static files
+//Use static files
 app.use(express.static("public"));
 
-//use body parser
+//Use body parser
 app.use(bodyParser.urlencoded({ extended: true }));
-//setting mongoose
+//Setting mongoose
 const mongoose = require("mongoose");
 const RestaurantDB = require("./models/restaurant.js");
 mongoose.connect("mongodb://127.0.0.1/Restaurant", { useNewUrlParser: true });
@@ -31,27 +31,30 @@ app.get("/", (req, res) => {
     return res.render(`index`, { restaurants: restaurants });
   });
 });
-//create new restaurant
+//Create new restaurant
 app.get("/new", (req, res) => {
-  res.render(`new`);
+  res.render('new');
 });
 app.post("/new", (req, res) => {
   const newRestaurantInfo = req.body;
   const newRestaurant = RestaurantDB({
-    id: Number(RestaurantDB.find().length + 1),
     name: newRestaurantInfo.name,
+    name_en: newRestaurantInfo.name_en,
     category: newRestaurantInfo.category,
     location: newRestaurantInfo.location,
     phone: newRestaurantInfo.phone,
     description: newRestaurantInfo.description,
-    image: newRestaurantInfo.image
+    image: newRestaurantInfo.image,
+    rating: newRestaurantInfo.rating,
+    google_map:
+      "https://www.google.com/maps/place/" + newRestaurantInfo.location
   });
   newRestaurant.save(err => {
     if (err) return console.log(err);
     return res.redirect("/");
   });
 });
-//setting search bar
+//Setting search bar
 app.get("/search", (req, res) => {
   const keywords = req.query.keyword;
   RestaurantDB.find((err, restaurants) => {
@@ -70,12 +73,12 @@ app.get("/search", (req, res) => {
     });
   });
 });
-//go to show page
+//Go to show page
 app.get("/restaurants/:id", (req, res) => {
   RestaurantDB.find((err, restaurants) => {
     if (err) return console.log("show error");
     const restaurantsResults = restaurants.filter(
-      item => item.id.toString() === req.params.id
+      item => item._id.toString() === req.params.id
     );
     res.render("show", { restaurant: restaurantsResults[0] });
   });
@@ -85,7 +88,7 @@ app.get("/restaurants/:id/edit", (req, res) => {
   RestaurantDB.find((err, restaurants) => {
     if (err) return console.log("error");
     const restaurantsResults = restaurants.filter(
-      item => item.id.toString() === req.params.id
+      item => item._id.toString() === req.params.id
     );
     res.render("edit", { restaurant: restaurantsResults[0] });
   });
@@ -94,7 +97,7 @@ app.post("/restaurants/:id/edit", (req, res) => {
   const editRestaurant = req.body;
   const restaurantId = req.params.id;
   RestaurantDB.find((err, restaurants) => {
-    const restaurantCol = restaurants.filter(item => item.id == restaurantId);
+    const restaurantCol = restaurants.filter(item => item._id == restaurantId);
     const restaurantData = restaurantCol[0];
     if (err) return console.log("read error");
     else if (!restaurantData) return console.log("cant find data");
@@ -118,18 +121,13 @@ app.post("/restaurants/:id/edit", (req, res) => {
     }
   });
 });
-
+//Delete restaurants
 app.post("/restaurants/:id/delete", (req, res) => {
   const restaurantId = req.params.id;
-  //get real id
-  RestaurantDB.find((err, restaurants) => {
-    const restaurantCol = restaurants.filter(item => item.id == restaurantId);
-    const realId = restaurantCol[0]._id;
-    RestaurantDB.findById(realId, (err, restaurant) => {
-      restaurant.remove(err => {
-        if (err) return console.log("remove error");
-        return res.redirect("/");
-      });
+  RestaurantDB.findById(restaurantId, (err, restaurant) => {
+    restaurant.remove(err => {
+      if (err) return console.log("remove error");
+      return res.redirect("/");
     });
   });
 });

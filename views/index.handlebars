@@ -32,25 +32,27 @@
     </div>
   </div>
 </div>
-
+<!--Create new Restaurant-->
+<button class="btn btn-major" type="button" id="create-button" onclick="javascript:location.href='/new'">
+  <i class="fas fa-plus"></i>
+</button>
 <!-- restaurant list -->
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-10 col-12 mx-auto">
       <div class="card-columns">
-
         {{#each restaurants}}
-        <a class='restaurant-card' href="/restaurants/{{this.id}}" class="text-secondary">
+        <a class='restaurant-card' href="/restaurants/{{this._id}}" class="text-secondary">
 
           <div class="card mb-3">
 
             <img class="card-img-top" src={{this.image}} alt="{{this.name}}">
             <div class="item">
               <ul class="sub">
-                <li><a href="/restaurants/{{this.id}}">Detail</a></li>
-                <li><a href="/restaurants/{{this.id}}/edit">Edit</a></li>
+                <li><a href="/restaurants/{{this._id}}">Detail</a></li>
+                <li><a href="/restaurants/{{this._id}}/edit">Edit</a></li>
                 <li>
-                  <form method='POST' action="/restaurants/{{this.id}}/delete">
+                  <form method='POST' action="/restaurants/{{this._id}}/delete">
                     <button type='submit'>Delete</button>
                   </form>
                 </li>

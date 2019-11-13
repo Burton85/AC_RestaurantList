@@ -45,7 +45,9 @@ header {
   background-color: #9b4b4b;
   color: white;
 }
-
+#create-button {
+  float: right;
+}
 .form-control:focus {
   box-shadow: none;
   border-color: #ced4da;
