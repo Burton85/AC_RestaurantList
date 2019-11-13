@@ -15,7 +15,8 @@ header {
   z-index: -1;
   margin: -5px;
   height: 360px;
-  background: #dddddd center center url('https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/5720/restaurants-list-cover.jpg');
+  background: #dddddd center center
+    url("https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/5720/restaurants-list-cover.jpg");
   background-size: cover;
   filter: blur(3px);
 }
@@ -33,6 +34,25 @@ header {
 
 .search-bar .search-bar-inner h4 {
   color: #9b4b4b;
+}
+.options {
+  float: right;
+  color: #666666;
+  display: inline;
+}
+.options a {
+  text-decoration: none;
+  color: inherit;
+}
+.options button {
+  display: inline;
+  color: inherit;
+  background-color: white;
+  border: 0;
+}
+.options :hover {
+  border-bottom: 2px solid peru;
+  color: peru;
 }
 
 .form-control::placeholder {

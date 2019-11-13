@@ -125,30 +125,6 @@ header {
 .item:hover .sub {
   visibility: visible;
 }
-/* .main {
-  z-index: 1;
-  float: right;
-  border: none;
-  background-color: none;
-}
-.main :hover .options {
-  visibility: visible;
-}
-
-.sub {
-  /* visibility: hidden; */
-/* display: inline;
-  float: right;
-}
-.sub li {
-  list-style-type: none;
-  color: #666666;
-  font-size: 2vh;
-}
-.sub a {
-  color: inherit;
-  text-decoration: none;
-} */
 */ @media screen and (max-width: 992px) {
   .card img {
     height: 115px;

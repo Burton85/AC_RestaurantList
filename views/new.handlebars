@@ -1,10 +1,15 @@
 <style>
+  form {
+    margin: 15vh;
+  }
+
   form p {
     width: 60vh;
     margin: auto;
   }
 
   .btn {
+    margin: 1vh;
     float: right;
   }
 </style>
@@ -22,58 +27,56 @@
 
   <div class="banner"></div>
 </header>
+<h1 class="mb-1 restaurant-show-title">建立餐廳資訊</h1>
 
 <div class="container" style="margin-top:5vh">
   <div class="row">
     <div class="col-12 col-md-10 mx-auto">
-      <form method='Post' action="/restaurants/{{restaurant.id}}/edit">
-
+      <form method='Post' action="/new">
         <p class="mb-1">
           <span class="text-secondary">
             名稱：
           </span>
-          <input type="text" name="name" placeholder="{{restaurant.name}}">
+          <input type="text" name="name" placeholder="name">
         </p>
 
         <p class="mb-1">
           <span class="text-secondary">
             類別：
           </span>
-          <input type="text" name="category" placeholder="{{restaurant.category}}">
+          <input type="text" name="category" placeholder="category">
         </p>
 
         <p class="mb-1">
           <span class="text-secondary">
             地址：
           </span>
-          <input type="text" name="location" placeholder="{{restaurant.location}}" style="width: 50vh;">
+          <input type="text" name="location" placeholder="location" style="width: 50vh;">
         </p>
 
         <p class="mb-1">
           <span class="text-secondary">
             電話：
           </span>
-          <input type="text" name="phone" placeholder="{{restaurant.phone}}" style="width: 50vh;">
+          <input type="text" name="phone" placeholder="phone" style="width: 50vh;">
         </p>
 
         <p class="mb-1">
           <span class="text-secondary">
             介紹：
-            <input type="text" name="description" placeholder="{{restaurant.description}}"
-              style="width: 50vh;height:20vh">
+            <input type="text" name="description" placeholder="description" style="width: 50vh;height:20vh">
+          </span>
+        </p>
+        <p class="mb-3 ">
+          <span class="text-secondary" id="app">
+            照片：
+            <input type=" text" name="image" placeholder="image url" style="width: 50vh;">
           </span>
         </p>
         <button class="btn btn-outline-secondary" type="submit">保存</button>
-        <p class="mb-3 ">
-          <span class="text-secondary">
-            照片：
-            <input type="text" name="image" placeholder="{{restaurant.image}}" style="width: 50vh;">
-          </span>
-        </p>
-        <a class="btn btn-outline-secondary" href="/restaurants/{{restaurant.id}}">返回</a>
+        <a class="btn btn-outline-secondary" href="/">返回</a>
       </form>
-      <img class=" rounded mx-auto d-block mb-4 w-100" src={{restaurant.image}} alt={{restaurant.name}}
-        style="max-width: 600px; clear:both">
+
     </div>
   </div>
 </div>
