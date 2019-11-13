@@ -39,16 +39,21 @@ app.get("/search", (req, res) => {
         item.name_en.toLowerCase().includes(keywords.toLowerCase())
       );
     });
-    return res.render(`index`, { restaurants: retaurantsResualt });
+    return res.render(`index`, {
+      restaurants: retaurantsResualt,
+      keywords: keywords
+    });
   });
-  // const rsresult = restaurantlist.results.filter(item => {
-  //   return (
-  //     item.name.toLowerCase().includes(keywords.toLowerCase()) ||
-  //     item.name_en.toLowerCase().includes(keywords.toLowerCase())
-  //   );
-  // });
-
-  // res.render("index", { restaurants: rsresult, keywords: keywords });
+});
+//edit page
+app.get("/restaurants/:id/edit", (req, res) => {
+  RestaurantDB.find((err, restaurants) => {
+    if (err) return console.log("error");
+    const restaurantsResults = restaurants.filter(
+      item => item.id.toString() === req.params.id
+    );
+    res.render("show", { restaurant: restaurantsResults[0] });
+  });
 });
 //go to show page
 app.get("/restaurants/:id", (req, res) => {
@@ -59,10 +64,6 @@ app.get("/restaurants/:id", (req, res) => {
     );
     res.render("show", { restaurant: restaurantsResults[0] });
   });
-  // const restaurant = restaurantlist.results.filter(
-  //   item => item.id.toString() === req.params.id
-  // );
-  // res.render("show", { restaurant: restaurant[0] });
 });
 
 app.listen(port, () => {

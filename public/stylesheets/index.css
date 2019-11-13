@@ -64,7 +64,15 @@ header {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
+.restaurant-card {
+  display: block;
+  height: auto;
+  width: auto;
+}
+.restaurant-card a {
+  color: inherit;
+  text-decoration: none;
+}
 .restaurant-category {
   color: #666666;
   font-size: 0.8rem;
@@ -78,8 +86,70 @@ header {
   font-size: 3rem;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
+.item {
+  float: right;
+  display: inline-block;
+}
+.main {
+  margin-right: 2vh;
+  float: right;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  line-height: 40px;
+}
+.sub {
+  margin-top: 10px;
+  font-size: 2vh;
+  visibility: hidden;
+  float: left;
+  text-align: center;
+  height: auto;
+}
+.sub li {
+  border-left: 2px solid sienna;
+  list-style-type: none;
+}
+.sub li a {
+  color: inherit;
+  text-decoration: none;
+}
+.sub li button {
+  background-color: white;
+  border: 0;
+}
+.sub :hover {
+  background-color: sienna;
+  color: #dddddd;
+}
+.item:hover .sub {
+  visibility: visible;
+}
+/* .main {
+  z-index: 1;
+  float: right;
+  border: none;
+  background-color: none;
+}
+.main :hover .options {
+  visibility: visible;
+}
 
-@media screen and (max-width: 992px) {
+.sub {
+  /* visibility: hidden; */
+/* display: inline;
+  float: right;
+}
+.sub li {
+  list-style-type: none;
+  color: #666666;
+  font-size: 2vh;
+}
+.sub a {
+  color: inherit;
+  text-decoration: none;
+} */
+*/ @media screen and (max-width: 992px) {
   .card img {
     height: 115px;
   }
