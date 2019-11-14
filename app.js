@@ -33,26 +33,40 @@ app.get("/", (req, res) => {
 });
 //Create new restaurant
 app.get("/new", (req, res) => {
-  res.render('new');
+  res.render("new");
 });
 app.post("/new", (req, res) => {
   const newRestaurantInfo = req.body;
-  const newRestaurant = RestaurantDB({
-    name: newRestaurantInfo.name,
-    name_en: newRestaurantInfo.name_en,
-    category: newRestaurantInfo.category,
-    location: newRestaurantInfo.location,
-    phone: newRestaurantInfo.phone,
-    description: newRestaurantInfo.description,
-    image: newRestaurantInfo.image,
-    rating: newRestaurantInfo.rating,
-    google_map:
-      "https://www.google.com/maps/place/" + newRestaurantInfo.location
-  });
-  newRestaurant.save(err => {
-    if (err) return console.log(err);
-    return res.redirect("/");
-  });
+  if (
+    newRestaurantInfo.name &&
+    newRestaurantInfo.name_en &&
+    newRestaurantInfo.category &&
+    newRestaurantInfo.location &&
+    newRestaurantInfo.phone &&
+    newRestaurantInfo.description &&
+    newRestaurantInfo.image &&
+    newRestaurantInfo.rating &&
+    newRestaurantInfo.location
+  ) {
+    const newRestaurant = RestaurantDB({
+      name: newRestaurantInfo.name,
+      name_en: newRestaurantInfo.name_en,
+      category: newRestaurantInfo.category,
+      location: newRestaurantInfo.location,
+      phone: newRestaurantInfo.phone,
+      description: newRestaurantInfo.description,
+      image: newRestaurantInfo.image,
+      rating: newRestaurantInfo.rating,
+      google_map:
+        "https://www.google.com/maps/place/" + newRestaurantInfo.location
+    });
+    newRestaurant.save(err => {
+      if (err) return console.log(err);
+      return res.redirect("/");
+    });
+  } else {
+    res.render("new", { message: "Please check the form has been filled up." });
+  }
 });
 //Setting search bar
 app.get("/search", (req, res) => {

@@ -87,7 +87,11 @@ header {
   font-size: 3rem;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
-
+.alert {
+  color: red;
+  font-weight: bolder;
+  font-size: 2vh;
+}
 @media screen and (max-width: 768px) {
   .restaurant-show-title {
     font-size: 2rem;
