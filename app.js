@@ -4,12 +4,14 @@ const app = express();
 const port = 3000;
 const exphbs = require("express-handlebars");
 const bodyParser = require("body-parser");
+const methodOverride = require("method-override");
 //Setting handlebars
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 //Use static files
 app.use(express.static("public"));
-
+//use method override
+app.use(methodOverride("_method"));
 //Use body parser
 app.use(bodyParser.urlencoded({ extended: true }));
 //Setting mongoose
@@ -109,7 +111,7 @@ app.get("/restaurants/:id/edit", (req, res) => {
     res.render("edit", { restaurant: restaurantsResults[0] });
   });
 });
-app.post("/restaurants/:id/edit", (req, res) => {
+app.put("/restaurants/:id/edit", (req, res) => {
   const editRestaurant = req.body;
   const restaurantId = req.params.id;
   RestaurantDB.find((err, restaurants) => {
@@ -138,7 +140,7 @@ app.post("/restaurants/:id/edit", (req, res) => {
   });
 });
 //Delete restaurants
-app.post("/restaurants/:id/delete", (req, res) => {
+app.delete("/restaurants/:id/delete", (req, res) => {
   const restaurantId = req.params.id;
   RestaurantDB.findById(restaurantId, (err, restaurant) => {
     restaurant.remove(err => {
