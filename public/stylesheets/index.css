@@ -52,7 +52,13 @@ header {
   box-shadow: none;
   border-color: #ced4da;
 }
-
+.sort-select {
+  color: #aaaaaa;
+  position: relative;
+  left: 90%;
+  margin: 1vh;
+  font-size: 2vh;
+}
 .card {
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
