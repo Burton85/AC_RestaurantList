@@ -62,10 +62,12 @@ app.post("/new", (req, res) => {
     });
     newRestaurant.save(err => {
       if (err) return console.log(err);
-      return res.redirect("/");
+      return res.redirect(`/restaurants/${newRestaurant._id}`);
     });
   } else {
-    res.render("new", { message: "Please check the form has been filled up." });
+    res.render("new", {
+      message: "Please make sure the whole form has been filled up."
+    });
   }
 });
 //Setting search bar
