@@ -49,33 +49,56 @@ router.post("/new", (req, res) => {
   }
 });
 //Setting search bar
-router.post("/search", (req, res) => {
-  const keywords = req.body.keywords;
-  const sorts = req.body.sorts;
-  let sort_name = "name";
-  let sort_sort = "asc";
-  if (sorts == "asc" || sorts == "desc") sort_sort = sorts;
-  else if (sorts == "rating") sort_name = "rating";
-  else if (sorts == "area") sort_name = "location";
-  console.log("sort_name", sort_name);
-  console.log("sort_sort", sort_sort);
-  RestaurantDB.find({})
-    .sort({ sort_name: sort_sort })
-    .exec((err, restaurants) => {
-      if (err) return console.log("Sort error");
-      const restaurantsResult = restaurants.filter(item => {
-        return (
-          item.name.toLowerCase().includes(keywords.toLowerCase()) ||
-          item.name_en.toLowerCase().includes(keywords.toLowerCase()) ||
-          item.category.toLowerCase().includes(keywords.toLowerCase()) ||
-          item.location.toLowerCase().includes(keywords.toLowerCase())
-        );
-      });
-      return res.render("index", {
-        restaurants: restaurantsResult,
-        keywords: keywords,
-        sorts: sorts
-      });
+router.get("/search", (req, res) => {
+  const keywords = req.query.keywords;
+  const sorts = req.query.sorts;
+  // let sort_name = "name";
+  // let sort_sort = "asc";
+  RestaurantDB.find((err, restaurants) => {
+    if (err) return console.log("find err");
+    let restaurantsResult = restaurants.filter(item => {
+      return (
+        item.name.toLowerCase().includes(keywords.toLowerCase()) ||
+        item.name_en.toLowerCase().includes(keywords.toLowerCase()) ||
+        item.category.toLowerCase().includes(keywords.toLowerCase()) ||
+        item.location.toLowerCase().includes(keywords.toLowerCase())
+      );
     });
+
+    if (sorts == "asc")
+      restaurantsResult = restaurantsResult.sort((a, b) => {
+        return a.name > b.name ? 1 : -1;
+      });
+    else if (sorts == "desc")
+      restaurantsResult = restaurantsResult.sort((a, b) => {
+        return a.name > b.name ? -1 : 1;
+      });
+    else if (sorts == "rating")
+      restaurantsResult = restaurantsResult.sort((a, b) => {
+        return a.rating > b.rating ? 1 : -1;
+      });
+    else if (sorts == "area")
+      restaurantsResult = restaurantsResult.sort((a, b) => {
+        return a.location > b.location ? 1 : -1;
+      });
+    return res.render(`index`, {
+      restaurants: restaurantsResult,
+      keywords: keywords,
+      sorts: sorts
+    });
+  });
+  // query.find((err, q) => {
+  //   console.log(q);
+  // });
+  // query.sort({ sort_name: sort_sort });
+  // query.exec((err, restaurants) => {
+  //   if (err) return console.log("Sort error");
+  //   // console.log(restaurants);
+  //   return res.render(`index`, {
+  //     restaurants: restaurants,
+  //     keywords: keywords,
+  //     sorts: sorts
+  //   });
+  // });
 });
 module.exports = router;
