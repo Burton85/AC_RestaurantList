@@ -52,8 +52,6 @@ router.post("/new", (req, res) => {
 router.get("/search", (req, res) => {
   const keywords = req.query.keywords;
   const sorts = req.query.sorts;
-  // let sort_name = "name";
-  // let sort_sort = "asc";
   RestaurantDB.find((err, restaurants) => {
     if (err) return console.log("find err");
     let restaurantsResult = restaurants.filter(item => {
@@ -75,7 +73,7 @@ router.get("/search", (req, res) => {
       });
     else if (sorts == "rating")
       restaurantsResult = restaurantsResult.sort((a, b) => {
-        return a.rating > b.rating ? 1 : -1;
+        return a.rating > b.rating ? -1 : 1;
       });
     else if (sorts == "area")
       restaurantsResult = restaurantsResult.sort((a, b) => {
@@ -87,18 +85,5 @@ router.get("/search", (req, res) => {
       sorts: sorts
     });
   });
-  // query.find((err, q) => {
-  //   console.log(q);
-  // });
-  // query.sort({ sort_name: sort_sort });
-  // query.exec((err, restaurants) => {
-  //   if (err) return console.log("Sort error");
-  //   // console.log(restaurants);
-  //   return res.render(`index`, {
-  //     restaurants: restaurants,
-  //     keywords: keywords,
-  //     sorts: sorts
-  //   });
-  // });
 });
 module.exports = router;

@@ -61,10 +61,13 @@ header {
 }
 .card {
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  height: 60vh;
 }
-
+.cont {
+  margin: 2vh;
+}
 .card img {
-  height: 180px;
+  height: 40vh;
 }
 
 .card-title {
