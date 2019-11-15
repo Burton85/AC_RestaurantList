@@ -15,7 +15,8 @@ Express ^ 4.17.1
 express-handlebars ^ 3.1.0
 jquery.js > 3.4.1
 bootstrap ^ 4.3.1
-popper.js
+MongoDB Community Server v4.0.13
+Mongoose v5.7.10
 
 ### Installing
 
@@ -31,19 +32,26 @@ $ git clone https://github.com/Burton0528/AC_RestaurantList
 cd AC_RestaurantList
 ```
 
-3.use npm packages
+3.Use npm packages
 
 ```
 $ npm install
 ```
 
-3.run the project
+4.Run restaurantSeeder.js in /models/seeds by Terminal
+
+```
+cd models/seeds
+node restaurantSeeder.js
+```
+
+5.Run the project
 
 ```
 $ npm run dev
 ```
 
-go to http://localhost:3000
+Connect http://localhost:3000 in your browser
 
 ## Features
 
