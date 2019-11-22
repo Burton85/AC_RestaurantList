@@ -1,30 +1,4 @@
-<style>
-  form {
-    margin-bottom: 30vh;
-  }
-
-  form p {
-    width: 60vh;
-    margin: auto;
-  }
-
-  .btn {
-    margin: 1vh;
-    float: right;
-  }
-</style>
 <header>
-  <!-- navigation -->
-  <nav class="navbar navbar-light bg-light">
-    <div class="container">
-      <a class="navbar-brand" href="/">
-        <img src="https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/6227/restaurant-list-logo.png"
-          width="30" height="30" class="d-inline-block align-top" alt="好。吃">
-        我的餐廳清單
-      </a>
-    </div>
-  </nav>
-
   <div class="banner"></div>
 </header>
 <h1 class="mb-1 restaurant-show-title">建立餐廳資訊</h1>
@@ -36,7 +10,7 @@
     {{/if}}
     <div class="col-12 col-md-10 mx-auto">
 
-      <form method='Post' action="/new">
+      <form class='newRestaurant' method='Post' action="/new">
         <p class="mb-1">
           <span class="text-secondary">
             名稱：
@@ -88,8 +62,8 @@
             <input type=" text" name="image" placeholder="image url" style="width: 50vh;">
           </span>
         </p>
-        <button class="btn btn-outline-secondary" type="submit">SAVE</button>
-        <a class="btn btn-outline-secondary" href="/">BACK</a>
+        <button class="btn btn-outline-success edit-btn" type="submit">SAVE</button>
+        <a class="btn btn-outline-secondary edit-btn" href="/">BACK</a>
       </form>
     </div>
   </div>

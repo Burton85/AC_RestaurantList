@@ -1,32 +1,12 @@
-<style>
-  form p {
-    width: 60vh;
-    margin: auto;
-  }
-
-  .btn {
-    float: right;
-  }
-</style>
 <header>
-  <!-- navigation -->
-  <nav class="navbar navbar-light bg-light">
-    <div class="container">
-      <a class="navbar-brand" href="/">
-        <img src="https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/6227/restaurant-list-logo.png"
-          width="30" height="30" class="d-inline-block align-top" alt="好。吃">
-        我的餐廳清單
-      </a>
-    </div>
-  </nav>
-
-  <div class="banner"></div>
+  <div class="banner" style='background: #dddddd center center
+      url({{restaurant.image}})'></div>
 </header>
 
 <div class="container" style="margin-top:5vh">
   <div class="row">
     <div class="col-12 col-md-10 mx-auto">
-      <form method='Post' action="/restaurants/{{restaurant._id}}/edit?_method=PUT">
+      <form class='newRestaurant' method='Post' action="/restaurants/{{restaurant._id}}/edit?_method=PUT">
 
         <p class="mb-1">
           <span class="text-secondary">
@@ -63,14 +43,15 @@
               style="width: 50vh;height:20vh">
           </span>
         </p>
-        <button class="btn btn-outline-secondary" type="submit">SAVE</button>
         <p class="mb-3 ">
           <span class="text-secondary">
             照片：
             <input type="text" name="image" placeholder="{{restaurant.image}}" style="width: 50vh;">
           </span>
         </p>
-        <a class="btn btn-outline-secondary" href="/restaurants/{{restaurant._id}}">BACK</a>
+        <button class="btn btn-outline-success edit-btn" type="submit">SAVE</button>
+
+        <a class="btn btn-outline-secondary edit-btn" href="/restaurants/{{restaurant._id}}">BACK</a>
       </form>
       <img class=" rounded mx-auto d-block mb-4 w-100" src={{restaurant.image}} alt={{restaurant.name}}
         style="max-width: 600px; clear:both">

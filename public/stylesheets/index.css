@@ -1,3 +1,6 @@
+/* body {
+  padding-top: 120px;
+} */
 header {
   overflow: hidden;
 }
@@ -135,6 +138,16 @@ header {
 }
 .item:hover .sub {
   visibility: visible;
+}
+/* new page style */
+.newRestaurant p {
+  width: 60vh;
+  margin: auto;
+}
+
+.edit-btn {
+  margin: 1vh;
+  float: right;
 }
 */ @media screen and (max-width: 992px) {
   .card img {

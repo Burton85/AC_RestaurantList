@@ -51,36 +51,42 @@ router.post("/new", (req, res) => {
 //Setting search bar
 router.get("/search", (req, res) => {
   const keywords = req.query.keywords;
-  const sorts = req.query.sorts;
+  let sorts = req.query.sorts;
+
   RestaurantDB.find((err, restaurants) => {
     if (err) return console.log("find err");
-    let restaurantsResult = restaurants.filter(item => {
-      return (
-        item.name.toLowerCase().includes(keywords.toLowerCase()) ||
-        item.name_en.toLowerCase().includes(keywords.toLowerCase()) ||
-        item.category.toLowerCase().includes(keywords.toLowerCase()) ||
-        item.location.toLowerCase().includes(keywords.toLowerCase())
-      );
-    });
-
+    if (keywords) {
+      restaurants = restaurants.filter(item => {
+        return (
+          item.name.toLowerCase().includes(keywords.toLowerCase()) ||
+          item.name_en.toLowerCase().includes(keywords.toLowerCase()) ||
+          item.category.toLowerCase().includes(keywords.toLowerCase()) ||
+          item.location.toLowerCase().includes(keywords.toLowerCase())
+        );
+      });
+    }
     if (sorts == "asc")
-      restaurantsResult = restaurantsResult.sort((a, b) => {
+      restaurants = restaurants.sort((a, b) => {
+        sorts = "A-Z";
         return a.name > b.name ? 1 : -1;
       });
     else if (sorts == "desc")
-      restaurantsResult = restaurantsResult.sort((a, b) => {
+      restaurants = restaurants.sort((a, b) => {
+        sorts = "Z-A";
         return a.name > b.name ? -1 : 1;
       });
     else if (sorts == "rating")
-      restaurantsResult = restaurantsResult.sort((a, b) => {
+      restaurants = restaurants.sort((a, b) => {
+        sorts = "評分";
         return a.rating > b.rating ? -1 : 1;
       });
     else if (sorts == "area")
-      restaurantsResult = restaurantsResult.sort((a, b) => {
+      restaurants = restaurants.sort((a, b) => {
+        sorts = "地區";
         return a.location > b.location ? 1 : -1;
       });
     return res.render(`index`, {
-      restaurants: restaurantsResult,
+      restaurants: restaurants,
       keywords: keywords,
       sorts: sorts
     });

@@ -29,6 +29,7 @@ db.once("open", () => {
 //routes
 app.use("/restaurants", require("./routes/restaurants.js"));
 app.use("/", require("./routes/home.js"));
+app.use("/users", require("./routes/users.js"));
 
 app.listen(port, () => {
   console.log(`express is listening on the port:${port}`);

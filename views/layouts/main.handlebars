@@ -13,7 +13,53 @@
 </head>
 
 <body>
+  <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+    <a class="navbar-brand " href="/" style="color: aliceblue;">Restaurant List</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+      aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          {{!-- <a class="nav-link" href="#"> <span class="sr-only">(current)</span></a> --}}
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"></a>
+        </li>
+        <li class="nav-item"></li>
+        <a class="nav-link" href="#"></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"></a>
+        </li>
+      </ul>
+      <form action="/search" class="d-flex flex-row">
+        <div class="input-group">
+          <input type="text" name="keywords" class="form-control" placeholder="輸入餐廳、分類" aria-label="Restaurant Name..."
+            aria-describedby="search-button" value={{keywords}}>
+          <div class="input-group-append">
+            <button class="btn btn-major" type="submit" id="search-button">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </nav>
   {{{body}}}
+  <!-- Footer -->
+  <footer class="page-footer font-small bg-secondary mt-5">
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3 ">© 2019 Copyright:
+      <a href="#"> AC_RestaurantList.com</a>
+    </div>
+    <!-- Copyright -->
+
+  </footer>
+  <!-- Footer -->
   <script scr='/javascripts/popper.min.js'></script>
   <script scr='/javascripts/jquery-3.4.1.min.js'></script>
   <script scr='/javascripts/bootstrap.min.js'></script>
