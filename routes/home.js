@@ -4,6 +4,7 @@ const RestaurantDB = require("../models/restaurant");
 
 //setting routes
 router.get("/", (req, res) => {
+  console.log(req.user);
   RestaurantDB.find((err, restaurants) => {
     if (err) return console.log("err");
     return res.render(`index`, { restaurants: restaurants });

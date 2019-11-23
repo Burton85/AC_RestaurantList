@@ -8,20 +8,20 @@ const userSchema = new Schema({
     unique: true
   },
   phone: {
-    type: String,
-    validate: {
-      validator: function(v) {
-        return /\d{3}-\d{3}-\d{4}/.test(v);
-      },
-      message: props => `${props.value} is not a valid phone number!`
-    }
+    type: String
+    // validate: {
+    //   validator: function(v) {
+    //     return /\d{3}-\d{3}-\d{4}/.test(v);
+    //   },
+    //   message: props => `${props.value} is not a valid phone number!`
+    // }
   },
   email: {
     type: String,
-    validate: {
-      validator: () => Promise.resolve(false),
-      message: "Email validation failed"
-    },
+    // validate: {
+    //   validator: () => Promise.resolve(false),
+    //   message: "Email validation failed"
+    // },
     require: [true, "User email number required"]
   },
   password: {
@@ -37,4 +37,4 @@ const userSchema = new Schema({
   }
 });
 //export the model named Users
-module.exports = mongoose.model("Users", userSchema);
+module.exports = mongoose.model("UserDB", userSchema);
