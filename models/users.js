@@ -4,8 +4,7 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   name: {
     type: String,
-    require: [true, "User name number required"],
-    unique: true
+    require: true
   },
   phone: {
     type: String
@@ -18,6 +17,8 @@ const userSchema = new Schema({
   },
   email: {
     type: String,
+    unique: true,
+
     // validate: {
     //   validator: () => Promise.resolve(false),
     //   message: "Email validation failed"

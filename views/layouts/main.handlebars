@@ -26,26 +26,21 @@
           {{!-- <a class="nav-link" href="#"> <span class="sr-only">(current)</span></a> --}}
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"></a>
+          <a class="nav-link" href="/">餐廳總覽</a>
         </li>
         <li class="nav-item"></li>
-        <a class="nav-link" href="#"></a>
+        <a class="nav-link" href="/favorite">私人清單</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"></a>
+          <a class="nav-link" href="/private">我的餐廳</a>
         </li>
       </ul>
-      <form action="/search" class="d-flex flex-row">
-        <div class="input-group">
-          <input type="text" name="keywords" class="form-control" placeholder="輸入餐廳、分類" aria-label="Restaurant Name..."
-            aria-describedby="search-button" value={{keywords}}>
-          <div class="input-group-append">
-            <button class="btn btn-major" type="submit" id="search-button">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
-        </div>
-      </form>
+      {{#if isAuthenticated}}
+      <a href="/users/logout" class="btn btn-outline-primary " style="font-weight: bolder;color:white">Logout</a>
+
+      {{else}}
+      <a href="/users/login" class="btn btn-outline-primary " style="font-weight: bolder;color:white">Login</a>
+      {{/if}}
     </div>
   </nav>
   {{{body}}}

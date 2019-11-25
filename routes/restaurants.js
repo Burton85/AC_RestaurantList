@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const RestaurantDB = require("../models/restaurant");
-
+const { authenticated } = require("../config/auth");
 //Go to show page
-router.get("/:id", (req, res) => {
+router.get("/:id", authenticated, (req, res) => {
   RestaurantDB.find((err, restaurants) => {
     if (err) return console.log("show error");
     const restaurantsResults = restaurants.filter(
@@ -13,7 +13,7 @@ router.get("/:id", (req, res) => {
   });
 });
 //edit page
-router.get("/:id/edit", (req, res) => {
+router.get("/:id/edit", authenticated, (req, res) => {
   RestaurantDB.find((err, restaurants) => {
     if (err) return console.log("error");
     const restaurantsResults = restaurants.filter(

@@ -11,7 +11,11 @@ const session = require("express-session");
 const passport = require("passport");
 require("./config/passport")(passport);
 const flash = require("connect-flash");
-
+//DISTINGUISH THE ENVIRONMENT
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+//b
 //Setting handlebars
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
@@ -56,6 +60,7 @@ app.use((req, res, next) => {
 app.use("/restaurants", require("./routes/restaurants.js"));
 app.use("/", require("./routes/home.js"));
 app.use("/users", require("./routes/users.js"));
+app.use("/auth", require("./routes/auth"));
 
 app.listen(port, () => {
   console.log(`express is listening on the port:${port}`);

@@ -9,6 +9,7 @@ router.get("/login", (req, res) => {
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", {
     successRedirect: "/",
+    failureFlash: true,
     failureRedirect: "/users/login"
   })(req, res, next);
 });
@@ -69,4 +70,11 @@ router.post("/register", (req, res) => {
     });
   }
 });
+//logout
+router.get("/logout", (req, res) => {
+  req.logout();
+  req.flash("success_msg", "Logout!");
+  res.redirect("/users/login");
+});
+
 module.exports = router;

@@ -44,6 +44,10 @@ const restaurantSchema = new Schema({
     ref: "users",
     index: true,
     require: true
+  },
+  public: {
+    type: Boolean,
+    default: true
   }
 });
 
