@@ -45,7 +45,7 @@ cd models/seeds
 node restaurantSeeder.js
 ```
 
-5.Run the project
+5.Run the project in root
 
 ```
 $ npm run dev
@@ -58,3 +58,18 @@ Connect http://localhost:3000 in your browser
 1. Keywords searching for restaurants.
 2. See more information for the restaurant.
 3. It is able to create,delete or edit the restaurant list.
+4. Search by keywords for restaurant in the meantime you can also sort it as you wish .
+5. Able to Register or Login with your Facebook account.
+   Or you can use the following test account created by seeder
+
+```
+Email:ddd@ddd Password:d
+```
+
+```
+ Email:aaa@aaa Password:a
+```
+
+6. Add the restaurant you are interested to your favorite with clicking the star icon.
+
+7.View the restaurant list you post and edit them on the private page.
