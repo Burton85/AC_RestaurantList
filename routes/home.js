@@ -1,53 +1,52 @@
 const express = require("express");
 const router = express.Router();
 const RestaurantDB = require("../models/restaurant");
+const UserDB = require("../models/users");
+
 const { authenticated } = require("../config/auth");
 
-//餐廳總攬
+//餐廳總覽
 router.get("/", authenticated, (req, res) => {
   const keywords = req.query.keywords;
   let sorts = req.query.sorts;
-  RestaurantDB.find(
-    { public: true } || { userId: req.user._id },
-    (err, restaurants) => {
-      if (err) return console.log("find err");
-      if (keywords) {
-        restaurants = restaurants.filter(item => {
-          return (
-            item.name.toLowerCase().includes(keywords.toLowerCase()) ||
-            item.name_en.toLowerCase().includes(keywords.toLowerCase()) ||
-            item.category.toLowerCase().includes(keywords.toLowerCase()) ||
-            item.location.toLowerCase().includes(keywords.toLowerCase())
-          );
-        });
-      }
-      if (sorts == "asc")
-        restaurants = restaurants.sort((a, b) => {
-          sorts = "A-Z";
-          return a.name > b.name ? 1 : -1;
-        });
-      else if (sorts == "desc")
-        restaurants = restaurants.sort((a, b) => {
-          sorts = "Z-A";
-          return a.name > b.name ? -1 : 1;
-        });
-      else if (sorts == "rating")
-        restaurants = restaurants.sort((a, b) => {
-          sorts = "評分";
-          return a.rating > b.rating ? -1 : 1;
-        });
-      else if (sorts == "area")
-        restaurants = restaurants.sort((a, b) => {
-          sorts = "地區";
-          return a.location > b.location ? 1 : -1;
-        });
-      return res.render(`index`, {
-        restaurants: restaurants,
-        keywords: keywords,
-        sorts: sorts
+  RestaurantDB.find({ public: true }, (err, restaurants) => {
+    if (err) return console.log("find err");
+    if (keywords) {
+      restaurants = restaurants.filter(item => {
+        return (
+          item.name.toLowerCase().includes(keywords.toLowerCase()) ||
+          item.name_en.toLowerCase().includes(keywords.toLowerCase()) ||
+          item.category.toLowerCase().includes(keywords.toLowerCase()) ||
+          item.location.toLowerCase().includes(keywords.toLowerCase())
+        );
       });
     }
-  );
+    if (sorts == "asc")
+      restaurants = restaurants.sort((a, b) => {
+        sorts = "A-Z";
+        return a.name > b.name ? 1 : -1;
+      });
+    else if (sorts == "desc")
+      restaurants = restaurants.sort((a, b) => {
+        sorts = "Z-A";
+        return a.name > b.name ? -1 : 1;
+      });
+    else if (sorts == "rating")
+      restaurants = restaurants.sort((a, b) => {
+        sorts = "評分";
+        return a.rating > b.rating ? -1 : 1;
+      });
+    else if (sorts == "area")
+      restaurants = restaurants.sort((a, b) => {
+        sorts = "地區";
+        return a.location > b.location ? 1 : -1;
+      });
+    return res.render(`index`, {
+      restaurants: restaurants,
+      keywords: keywords,
+      sorts: sorts
+    });
+  });
 });
 // 最愛的餐廳
 router.get("/favorite", authenticated, (req, res) => {
@@ -55,8 +54,7 @@ router.get("/favorite", authenticated, (req, res) => {
   let sorts = req.query.sorts;
 
   RestaurantDB.find(
-    ({ public: false } && { userId: req.user._id }) ||
-      ({ public: false } && { _id: req.user.restaurant_id }),
+    { public: true } && { _id: req.user.restaurant_id },
     (err, restaurants) => {
       if (err) return console.log("find err");
       if (keywords) {
@@ -100,7 +98,6 @@ router.get("/favorite", authenticated, (req, res) => {
 // 我的餐廳
 router.get("/private", authenticated, (req, res) => {
   const keywords = req.query.keywords;
-  const permission = true; //edit permission
   let sorts = req.query.sorts;
 
   RestaurantDB.find(
@@ -137,11 +134,11 @@ router.get("/private", authenticated, (req, res) => {
           sorts = "地區";
           return a.location > b.location ? 1 : -1;
         });
-      return res.render(`index`, {
+      restaurants.permission = true;
+      return res.render(`private`, {
         restaurants: restaurants,
         keywords: keywords,
-        sorts: sorts,
-        permission: permission
+        sorts: sorts
       });
     }
   );
@@ -149,7 +146,6 @@ router.get("/private", authenticated, (req, res) => {
 
 //Create new restaurant
 router.get("/new", authenticated, (req, res) => {
-  console.log(req.user);
   res.render("new");
 });
 
@@ -210,6 +206,20 @@ router.post("/new", authenticated, (req, res) => {
       return res.redirect(`/restaurants/${newRestaurant._id}`);
     });
   }
+});
+router.put("/:id/put", authenticated, (req, res) => {
+  const userId = req.user._id;
+  RestaurantDB.find((err, restaurants) => {
+    if (err) return console.log("show error");
+    const restaurantsResults = restaurants.filter(
+      item => item._id.toString() === req.params.id
+    );
+    UserDB.updateOne(
+      { _id: userId },
+      { $push: { restaurant_id: restaurantsResults[0]._id } }
+    );
+    res.redirect("/favorite");
+  });
 });
 
 module.exports = router;

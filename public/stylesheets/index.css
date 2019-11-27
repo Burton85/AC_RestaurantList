@@ -1,6 +1,7 @@
 /* body {
   padding-top: 120px;
 } */
+
 header {
   overflow: hidden;
 }
@@ -99,6 +100,22 @@ header {
   text-align: center;
   font-size: 3rem;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+.starLink {
+  display: inline;
+}
+
+.starA {
+  position: absolute;
+  right: 10px;
+}
+.starB {
+  position: absolute;
+  right: 10px;
+  visibility: hidden;
+}
+.starLink:hover .starB {
+  visibility: visible;
 }
 .item {
   float: right;

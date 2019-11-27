@@ -4,12 +4,15 @@ const RestaurantDB = require("../models/restaurant");
 const { authenticated } = require("../config/auth");
 //Go to show page
 router.get("/:id", authenticated, (req, res) => {
+  const permission = false;
   RestaurantDB.find((err, restaurants) => {
     if (err) return console.log("show error");
     const restaurantsResults = restaurants.filter(
       item => item._id.toString() === req.params.id
-    );
-    res.render("show", { restaurant: restaurantsResults[0] });
+    ); // find the data match with parameter id
+
+    if (restaurantsResults[0].userId == req.user._id) permission = true; //check if the user is the author to the data
+    res.render("show", { restaurant: restaurantsResults[0], permission });
   });
 });
 //edit page

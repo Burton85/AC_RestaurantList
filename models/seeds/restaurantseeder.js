@@ -21,20 +21,6 @@ db.on("error", () => {
 db.once("open", () => {
   console.log("db connected");
 
-  for (let i = 0; i < restaurants.length; i++) {
-    RestaurantDB.create({
-      name: restaurants[i].name,
-      name_en: restaurants[i].name_en,
-      category: restaurants[i].category,
-      image: restaurants[i].image,
-      location: restaurants[i].location,
-      phone: restaurants[i].phone,
-      google_map: restaurants[i].google_map,
-      rating: restaurants[i].rating,
-      description: restaurants[i].description
-    });
-  }
-
   for (let i = 0; i < users.length; i++) {
     const newUser = new UserDB({
       name: users[i].name,
@@ -56,12 +42,27 @@ db.once("open", () => {
           .catch(err => console.log(err));
       });
     });
+
+    for (let j = i; j < restaurants.length; j += 2) {
+      RestaurantDB.create({
+        name: restaurants[j].name,
+        name_en: restaurants[j].name_en,
+        category: restaurants[j].category,
+        image: restaurants[j].image,
+        location: restaurants[j].location,
+        phone: restaurants[j].phone,
+        google_map: restaurants[j].google_map,
+        rating: restaurants[j].rating,
+        description: restaurants[j].description,
+        userId: newUser._id
+      });
+    }
+    // RestaurantDB.find((err, restaurant) => {
+    //   console.log(restaurant[0]);
+    //   UserDB.updateOne(
+    //     { name: "d" },
+    //     { $push: { restaurant_id: restaurant[0] } }
+    //   );
+    // });
   }
-  RestaurantDB.find((err, restaurant) => {
-    console.log(restaurant[0]._id);
-    UserDB.updateOne(
-      { name: "d" },
-      { $push: { restaurant_id: restaurant[0]._id } }
-    );
-  });
 });

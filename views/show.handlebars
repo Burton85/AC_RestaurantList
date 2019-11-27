@@ -3,13 +3,14 @@
     <div class="banner" style='background: #dddddd center center
       url({{restaurant.image}})'></div>
   </header>
+  {{#if permission}}
   <div class='options'>
     <a href="/restaurants/{{restaurant._id}}/edit">Edit</a>
     <form method='POST' action="/restaurants/{{restaurant._id}}/delete?_method=DELETE" style="display: inline;">
       <button type='submit'>Delete</button>
     </form>
   </div>
-
+  {{/if}}
   <h1 class="mb-1 restaurant-show-title">{{restaurant.name}}</h1>
   <div class="container">
     <div class="row">
