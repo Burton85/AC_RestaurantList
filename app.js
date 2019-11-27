@@ -11,11 +11,10 @@ const session = require("express-session");
 const passport = require("passport");
 require("./config/passport")(passport);
 const flash = require("connect-flash");
-//DISTINGUISH THE ENVIRONMENT
+//Distinguish The Environment
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
-//b
 //Setting handlebars
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");

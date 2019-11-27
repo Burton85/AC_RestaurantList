@@ -7,7 +7,6 @@ const { authenticated } = require("../config/auth");
 router.get("/", authenticated, (req, res) => {
   const keywords = req.query.keywords;
   let sorts = req.query.sorts;
-
   RestaurantDB.find(
     { public: true } || { userId: req.user._id },
     (err, restaurants) => {
@@ -55,88 +54,97 @@ router.get("/favorite", authenticated, (req, res) => {
   const keywords = req.query.keywords;
   let sorts = req.query.sorts;
 
-  RestaurantDB.find((err, restaurants) => {
-    if (err) return console.log("find err");
-    if (keywords) {
-      restaurants = restaurants.filter(item => {
-        return (
-          item.name.toLowerCase().includes(keywords.toLowerCase()) ||
-          item.name_en.toLowerCase().includes(keywords.toLowerCase()) ||
-          item.category.toLowerCase().includes(keywords.toLowerCase()) ||
-          item.location.toLowerCase().includes(keywords.toLowerCase())
-        );
+  RestaurantDB.find(
+    ({ public: false } && { userId: req.user._id }) ||
+      ({ public: false } && { _id: req.user.restaurant_id }),
+    (err, restaurants) => {
+      if (err) return console.log("find err");
+      if (keywords) {
+        restaurants = restaurants.filter(item => {
+          return (
+            item.name.toLowerCase().includes(keywords.toLowerCase()) ||
+            item.name_en.toLowerCase().includes(keywords.toLowerCase()) ||
+            item.category.toLowerCase().includes(keywords.toLowerCase()) ||
+            item.location.toLowerCase().includes(keywords.toLowerCase())
+          );
+        });
+      }
+      if (sorts == "asc")
+        restaurants = restaurants.sort((a, b) => {
+          sorts = "A-Z";
+          return a.name > b.name ? 1 : -1;
+        });
+      else if (sorts == "desc")
+        restaurants = restaurants.sort((a, b) => {
+          sorts = "Z-A";
+          return a.name > b.name ? -1 : 1;
+        });
+      else if (sorts == "rating")
+        restaurants = restaurants.sort((a, b) => {
+          sorts = "評分";
+          return a.rating > b.rating ? -1 : 1;
+        });
+      else if (sorts == "area")
+        restaurants = restaurants.sort((a, b) => {
+          sorts = "地區";
+          return a.location > b.location ? 1 : -1;
+        });
+      return res.render(`index`, {
+        restaurants: restaurants,
+        keywords: keywords,
+        sorts: sorts
       });
     }
-    if (sorts == "asc")
-      restaurants = restaurants.sort((a, b) => {
-        sorts = "A-Z";
-        return a.name > b.name ? 1 : -1;
-      });
-    else if (sorts == "desc")
-      restaurants = restaurants.sort((a, b) => {
-        sorts = "Z-A";
-        return a.name > b.name ? -1 : 1;
-      });
-    else if (sorts == "rating")
-      restaurants = restaurants.sort((a, b) => {
-        sorts = "評分";
-        return a.rating > b.rating ? -1 : 1;
-      });
-    else if (sorts == "area")
-      restaurants = restaurants.sort((a, b) => {
-        sorts = "地區";
-        return a.location > b.location ? 1 : -1;
-      });
-    return res.render(`index`, {
-      restaurants: restaurants,
-      keywords: keywords,
-      sorts: sorts
-    });
-  });
+  );
 });
 // 我的餐廳
 router.get("/private", authenticated, (req, res) => {
   const keywords = req.query.keywords;
+  const permission = true; //edit permission
   let sorts = req.query.sorts;
 
-  RestaurantDB.find((err, restaurants) => {
-    if (err) return console.log("find err");
-    if (keywords) {
-      restaurants = restaurants.filter(item => {
-        return (
-          item.name.toLowerCase().includes(keywords.toLowerCase()) ||
-          item.name_en.toLowerCase().includes(keywords.toLowerCase()) ||
-          item.category.toLowerCase().includes(keywords.toLowerCase()) ||
-          item.location.toLowerCase().includes(keywords.toLowerCase())
-        );
+  RestaurantDB.find(
+    { public: false } && { userId: req.user._id },
+    (err, restaurants) => {
+      if (err) return console.log("find err");
+      if (keywords) {
+        restaurants = restaurants.filter(item => {
+          return (
+            item.name.toLowerCase().includes(keywords.toLowerCase()) ||
+            item.name_en.toLowerCase().includes(keywords.toLowerCase()) ||
+            item.category.toLowerCase().includes(keywords.toLowerCase()) ||
+            item.location.toLowerCase().includes(keywords.toLowerCase())
+          );
+        });
+      }
+      if (sorts == "asc")
+        restaurants = restaurants.sort((a, b) => {
+          sorts = "A-Z";
+          return a.name > b.name ? 1 : -1;
+        });
+      else if (sorts == "desc")
+        restaurants = restaurants.sort((a, b) => {
+          sorts = "Z-A";
+          return a.name > b.name ? -1 : 1;
+        });
+      else if (sorts == "rating")
+        restaurants = restaurants.sort((a, b) => {
+          sorts = "評分";
+          return a.rating > b.rating ? -1 : 1;
+        });
+      else if (sorts == "area")
+        restaurants = restaurants.sort((a, b) => {
+          sorts = "地區";
+          return a.location > b.location ? 1 : -1;
+        });
+      return res.render(`index`, {
+        restaurants: restaurants,
+        keywords: keywords,
+        sorts: sorts,
+        permission: permission
       });
     }
-    if (sorts == "asc")
-      restaurants = restaurants.sort((a, b) => {
-        sorts = "A-Z";
-        return a.name > b.name ? 1 : -1;
-      });
-    else if (sorts == "desc")
-      restaurants = restaurants.sort((a, b) => {
-        sorts = "Z-A";
-        return a.name > b.name ? -1 : 1;
-      });
-    else if (sorts == "rating")
-      restaurants = restaurants.sort((a, b) => {
-        sorts = "評分";
-        return a.rating > b.rating ? -1 : 1;
-      });
-    else if (sorts == "area")
-      restaurants = restaurants.sort((a, b) => {
-        sorts = "地區";
-        return a.location > b.location ? 1 : -1;
-      });
-    return res.render(`index`, {
-      restaurants: restaurants,
-      keywords: keywords,
-      sorts: sorts
-    });
-  });
+  );
 });
 
 //Create new restaurant

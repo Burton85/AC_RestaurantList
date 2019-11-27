@@ -17,11 +17,7 @@ const passports = passport => {
           else if (isMatch) {
             return done(null, user);
           } else {
-            return done(
-              null,
-              false,
-              req.flash("warning_msg", "Passwords do not match")
-            );
+            return done(null, false, { message: "Incorrect username" });
           }
         });
       });

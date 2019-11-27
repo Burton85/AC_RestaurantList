@@ -41,7 +41,7 @@ const restaurantSchema = new Schema({
   },
   userId: {
     type: Schema.Types.ObjectId,
-    ref: "users",
+    ref: "UsersDB",
     index: true,
     require: true
   },

@@ -7,6 +7,7 @@ router.get("/login", (req, res) => {
   res.render("login");
 });
 router.post("/login", (req, res, next) => {
+  console.log(passport.done);
   passport.authenticate("local", {
     successRedirect: "/",
     failureFlash: true,
@@ -61,7 +62,7 @@ router.post("/register", (req, res) => {
             newUser
               .save()
               .then(user => {
-                res.redirect("/");
+                res.redirect("/users/login");
               })
               .catch(err => console.log(err));
           });
