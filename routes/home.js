@@ -208,18 +208,12 @@ router.post("/new", authenticated, (req, res) => {
   }
 });
 router.put("/:id/put", authenticated, (req, res) => {
-  const userId = req.user._id;
-  RestaurantDB.find((err, restaurants) => {
-    if (err) return console.log("show error");
-    const restaurantsResults = restaurants.filter(
-      item => item._id.toString() === req.params.id
-    );
-    UserDB.updateOne(
-      { _id: userId },
-      { $push: { restaurant_id: restaurantsResults[0]._id } }
-    );
-    res.redirect("/favorite");
-  });
+  UserDB.update(
+    { _id: req.user._id },
+    { $push: { restaurant_id: req.params.id } }
+  );
+  res.redirect("/favorite");
+  // });
 });
 
 module.exports = router;
